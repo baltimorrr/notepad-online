@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad Online</title>
+</head>
+<body>
+    <h1>Notepad online</h1>
+
+    <div id="edit-form">
+        <textarea name="" id="edit-area" cols="50" rows="30" placeholder="type here"></textarea>
+    </div>
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io()
+
+    const editForm = document.querySelector('#edit-form')
+    const editArea = document.querySelector('#edit-area')
+
+    editForm.addEventListener('keyup', (e) => {
+        e.preventDefault()
+
+        const message = editArea.value
+        // console.log(message)
+        socket.emit('edit-file', {
+            message: message
+        })
+        editArea.value = message
+    })
+
+    
+    socket.on('send-file', (message) => {
+        // console.log(message)
+        editArea.value = message.message
+    })
+</script>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad Online</title>
+</head>
+<body>
+    <h1>Notepad online</h1>
+
+    <ul id="messages"></ul>
+
+    <form id="chat-form">
+        <input type="text" id="chat-mes">
+        <button id="send-chat">Send</button>
+    </form>
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io()
+
+    const chatForm = document.querySelector('#chat-form')
+    const chatMes = document.querySelector('#chat-mes')
+
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        const message = chatMes.value
+        socket.emit('on-chat', {
+            message: message
+        })
+        chatMes.value = ''
+    })
+
+    const messages = document.querySelector('#messages')
+    socket.on('user-chat', (message) => {
+        const chatItem = document.createElement('li')
+        chatItem.textContent = message.message
+
+        messages.appendChild(chatItem)
+    })
+</script>
+
+</html> -->
