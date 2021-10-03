@@ -24,18 +24,18 @@
     editForm.addEventListener('keyup', (e) => {
         e.preventDefault()
 
-        const message = editArea.value
+        const paragraph = editArea.value
         // console.log(message)
         socket.emit('edit-file', {
-            message: message
+            paragraph: paragraph
         })
-        editArea.value = message
+        editArea.value = paragraph
     })
 
     
-    socket.on('send-file', (message) => {
+    socket.on('send-file', (paragraph) => {
         // console.log(message)
-        editArea.value = message.message
+        editArea.value = paragraph.paragraph
     })
 </script>
 
